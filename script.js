@@ -1,6 +1,17 @@
 document.addEventListener("DOMContentLoaded", () => {
   loadTasks();
   document.getElementById("themeToggle").addEventListener("click", toggleTheme);
+
+  document.getElementById("showDashboard").addEventListener("click", () => filterTasks("all"));
+  document.getElementById("showPending").addEventListener("click", () => filterTasks("pending"));
+  document.getElementById("showCompleted").addEventListener("click", () => filterTasks("completed"));
+
+  document.querySelectorAll(".sidebar ul li").forEach(item => {
+    item.addEventListener("click", () => {
+      document.querySelectorAll(".sidebar ul li").forEach(li => li.classList.remove("active"));
+      item.classList.add("active");
+    });
+  });
 });
 
 function addTask() {
@@ -19,24 +30,28 @@ function createTaskElement(taskText, completed = false) {
   const li = document.createElement("li");
   if (completed) li.classList.add("completed");
 
-  li.innerHTML = `
-    <span onclick="toggleComplete(this)">${taskText}</span>
-    <div class="task-actions">
-      <button onclick="deleteTask(this)">❌</button>
-    </div>
-  `;
+  const span = document.createElement("span");
+  span.textContent = taskText;
+  span.addEventListener("click", () => {
+    li.classList.toggle("completed");
+    saveTasks();
+  });
+
+  const deleteBtn = document.createElement("button");
+  deleteBtn.textContent = "❌";
+  deleteBtn.addEventListener("click", () => {
+    li.remove();
+    saveTasks();
+  });
+
+  const actions = document.createElement("div");
+  actions.classList.add("task-actions");
+  actions.appendChild(deleteBtn);
+
+  li.appendChild(span);
+  li.appendChild(actions);
+
   return li;
-}
-
-function deleteTask(button) {
-  const li = button.parentElement.parentElement;
-  li.remove();
-  saveTasks();
-}
-
-function toggleComplete(span) {
-  span.parentElement.classList.toggle("completed");
-  saveTasks();
 }
 
 function saveTasks() {
@@ -66,4 +81,20 @@ function loadTasks() {
 function toggleTheme() {
   document.body.classList.toggle("light");
   localStorage.setItem("theme", document.body.classList.contains("light") ? "light" : "dark");
+}
+
+function filterTasks(type) {
+  const allTasks = document.querySelectorAll("#taskList li");
+  allTasks.forEach(task => {
+    const isCompleted = task.classList.contains("completed");
+    if (type === "all") {
+      task.style.display = "flex";
+    } else if (type === "pending" && isCompleted) {
+      task.style.display = "none";
+    } else if (type === "completed" && !isCompleted) {
+      task.style.display = "none";
+    } else {
+      task.style.display = "flex";
+    }
+  });
 }
