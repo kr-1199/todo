@@ -1,11 +1,10 @@
-<!-- index.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>To-Do Dashboard</title>
-  <link rel="stylesheet" href="style.css"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Advanced To-Do Dashboard</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <div class="dashboard">
@@ -20,17 +19,26 @@
     
     <div class="main">
       <div class="header">
-        <h1>Welcome Back!</h1>
-        <p>Your productivity dashboard</p>
-        <button id="themeToggle">Toggle Theme</button>
+        <h1>Task Manager</h1>
+        <div class="summary">
+          <span>Total: <strong id="totalCount">0</strong></span>
+          <span>Pending: <strong id="pendingCount">0</strong></span>
+          <span>Completed: <strong id="completedCount">0</strong></span>
+        </div>
       </div>
 
       <div class="todo-container">
         <div class="input-group">
-          <input type="text" id="taskInput" placeholder="Enter a new task..." />
+          <input type="text" id="taskInput" placeholder="Enter task..." />
+          <input type="date" id="dueDate" />
+          <select id="priority">
+            <option value="Low">Low</option>
+            <option value="Medium">Medium</option>
+            <option value="High">High</option>
+          </select>
           <button onclick="addTask()">Add Task</button>
         </div>
-
+        <input type="text" id="searchTask" placeholder="Search tasks..." oninput="filterTasksBySearch(this.value)" />
         <ul id="taskList"></ul>
       </div>
     </div>
