@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>To-Do Dashboard</title>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+  <div class="dashboard">
+    <div class="sidebar">
+      <h2>My Tasks</h2>
+      <ul>
+        <li>Dashboard</li>
+        <li>Tasks</li>
+        <li>Completed</li>
+      </ul>
+    </div>
+    
+    <div class="main">
+      <div class="header">
+        <h1>Welcome Back!</h1>
+        <p>Your productivity dashboard</p>
+        <button id="themeToggle">Toggle Theme</button>
+      </div>
+
+      <div class="todo-container">
+        <div class="input-group">
+          <input type="text" id="taskInput" placeholder="Enter a new task..." />
+          <button onclick="addTask()">Add Task</button>
+        </div>
+
+        <ul id="taskList"></ul>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
